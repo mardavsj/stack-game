@@ -39,12 +39,12 @@ function init() {
     width / -2,
     width / 2,
     height / 1,
-    height / -1.5,
+    height / -1,
     0,
     100
   );
 
-  camera.position.set(4, 4, 4);
+  camera.position.set(3, 3, 3);
   camera.lookAt(0, 0, 0);
   scene = new THREE.Scene();
   addLayer(0, 0, originalBoxSize, originalBoxSize);
