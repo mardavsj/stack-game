@@ -39,7 +39,7 @@ function init() {
     width / -2,
     width / 2,
     height / 1,
-    height / -1,
+    height / -0.9,
     0,
     100
   );
