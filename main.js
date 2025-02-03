@@ -153,7 +153,9 @@ function cutBox(topLayer, overlap, size, delta) {
 window.addEventListener("mousedown", eventHandler);
 window.addEventListener("touchstart", function (event) {
   event.preventDefault(); // Prevent default behavior for touch
-  eventHandler(); // Trigger the restart or stack placement logic
+  if (!gameEnded) { // Prevent triggering end of game on touch
+    eventHandler(); // Trigger the stack placement logic
+  }
 });
 
 window.addEventListener("keydown", function (event) {
