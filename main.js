@@ -15,6 +15,7 @@ const instructionsElement = document.getElementById("instructions");
 const resultsElement = document.getElementById("results");
 
 init();
+
 function setRobotPrecision() {
   robotPrecision = Math.random() * 1 - 0.5;
 }
@@ -101,7 +102,7 @@ function addLayer(x, z, width, depth, direction) {
 }
 
 function addOverhang(x, z, width, depth) {
-  const y = boxHeight * (stack.length - 1); 
+  const y = boxHeight * (stack.length - 1);
   const overhang = generateBox(x, y, z, width, depth, true);
   overhangs.push(overhang);
 }
@@ -150,7 +151,11 @@ function cutBox(topLayer, overlap, size, delta) {
 }
 
 window.addEventListener("mousedown", eventHandler);
-window.addEventListener("touchstart", eventHandler);
+window.addEventListener("touchstart", function (event) {
+  event.preventDefault(); // Prevent default behavior for touch
+  eventHandler(); // Trigger the restart or stack placement logic
+});
+
 window.addEventListener("keydown", function (event) {
   if (event.key == " ") {
     event.preventDefault();
@@ -239,8 +244,8 @@ function animation(time) {
       (!autopilot ||
         (autopilot &&
           topLayer.threejs.position[topLayer.direction] <
-            previousLayer.threejs.position[topLayer.direction] +
-              robotPrecision));
+          previousLayer.threejs.position[topLayer.direction] +
+          robotPrecision));
     if (boxShouldMove) {
       topLayer.threejs.position[topLayer.direction] += speed * timePassed;
       topLayer.cannonjs.position[topLayer.direction] += speed * timePassed;
