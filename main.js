@@ -1,5 +1,3 @@
-window.focus();
-
 let camera, scene, renderer;
 let world;
 let lastTime;
