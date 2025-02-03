@@ -5,8 +5,8 @@ let world;
 let lastTime;
 let stack;
 let overhangs;
-const boxHeight = 1;
-const originalBoxSize = 3;
+const boxHeight = 0.9;
+const originalBoxSize = 4;
 let autopilot;
 let gameEnded;
 let robotPrecision;
@@ -47,6 +47,7 @@ function init() {
   camera.position.set(3, 3, 3);
   camera.lookAt(0, 0, 0);
   scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x87CEEA);
   addLayer(0, 0, originalBoxSize, originalBoxSize);
   addLayer(-10, 0, originalBoxSize, originalBoxSize, "x");
 
