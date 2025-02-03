@@ -1,3 +1,5 @@
+window.focus();
+
 let camera, scene, renderer;
 let world;
 let lastTime;
@@ -13,7 +15,6 @@ const instructionsElement = document.getElementById("instructions");
 const resultsElement = document.getElementById("results");
 
 init();
-
 function setRobotPrecision() {
   robotPrecision = Math.random() * 1 - 0.5;
 }
@@ -148,14 +149,31 @@ function cutBox(topLayer, overlap, size, delta) {
   topLayer.cannonjs.addShape(shape);
 }
 
+let lastTapTime = 0;
+const tapThreshold = 100; // Threshold for a quick tap
+
+function eventHandler() {
+  const currentTime = Date.now();
+  const timeDiff = currentTime - lastTapTime;
+
+  if (timeDiff < tapThreshold) {
+    // Ignore fast taps (quick taps won't trigger placement)
+    return;
+  }
+
+  lastTapTime = currentTime;
+
+  if (autopilot) startGame();
+  else splitBlockAndAddNextOneIfOverlaps();
+}
+
 window.addEventListener("mousedown", eventHandler);
 window.addEventListener("touchstart", function (event) {
   event.preventDefault(); // Prevent default behavior for touch
   if (!gameEnded) { // Prevent triggering end of game on touch
-    eventHandler(); // Trigger the stack placement logic
+    eventHandler(); // Trigger stack placement logic
   }
 });
-
 window.addEventListener("keydown", function (event) {
   if (event.key == " ") {
     event.preventDefault();
@@ -169,10 +187,9 @@ window.addEventListener("keydown", function (event) {
   }
 });
 
-function eventHandler() {
-  if (autopilot) startGame();
-  else splitBlockAndAddNextOneIfOverlaps();
-}
+document.addEventListener("touchstart", function () {
+  startGame();
+});
 
 function splitBlockAndAddNextOneIfOverlaps() {
   if (gameEnded) return;
