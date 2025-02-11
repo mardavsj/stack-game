@@ -194,7 +194,8 @@
 //     startGame();
 // });
 
-// const placeSound = new Audio('./placeSound.mp3');
+// const placeSound = new Audio('./sounds/placeSound.mp3');
+// const gameOverSound = new Audio('./sounds/gameOverSound.mp3');
 
 // function splitBlockAndAddNextOneIfOverlaps() {
 //     if (gameEnded) return;
@@ -261,6 +262,10 @@
 //     world.remove(topLayer.cannonjs);
 //     scene.remove(topLayer.threejs);
 //     gameEnded = true;
+
+//     // Play the game over sound
+//     gameOverSound.play();  // Game over sound
+
 //     if (resultsElement && !autopilot) resultsElement.style.display = "flex";
 // }
 
@@ -519,8 +524,13 @@ document.addEventListener("touchstart", function () {
     startGame();
 });
 
+// Preload the sounds
 const placeSound = new Audio('./sounds/placeSound.mp3');
-const gameOverSound = new Audio('./sounds/gameOverSound.mp3');  // New sound for game over
+placeSound.preload = 'auto';
+placeSound.volume = 1.0; // Ensure volume is audible
+const gameOverSound = new Audio('./sounds/gameOverSound.mp3');
+gameOverSound.preload = 'auto';
+gameOverSound.volume = 1.0;
 
 function splitBlockAndAddNextOneIfOverlaps() {
     if (gameEnded) return;
